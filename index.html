@@ -1,416 +1,1128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V L Sivasai Mani Harshith Bhattaram - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harshith Bhattaram | Data Scientist & AI/ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg: #0a0e17;
+      --bg2: #111827;
+      --bg3: #1a2235;
+      --surface: #1e2d42;
+      --surface2: #243450;
+      --border: rgba(99,179,237,0.15);
+      --accent: #38bdf8;
+      --accent2: #06d6a0;
+      --accent3: #f59e0b;
+      --text: #e2e8f0;
+      --text2: #94a3b8;
+      --text3: #64748b;
+      --card-shadow: 0 4px 32px rgba(0,0,0,0.4);
+      --glow: 0 0 24px rgba(56,189,248,0.18);
+      --radius: 16px;
+    }
+    [data-theme="light"] {
+      --bg: #f0f4ff;
+      --bg2: #e8eef8;
+      --bg3: #dde5f5;
+      --surface: #ffffff;
+      --surface2: #eef3fc;
+      --border: rgba(56,189,248,0.2);
+      --accent: #0284c7;
+      --accent2: #059669;
+      --accent3: #d97706;
+      --text: #0f172a;
+      --text2: #334155;
+      --text3: #64748b;
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --glow: 0 0 24px rgba(2,132,199,0.12);
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+      cursor: none;
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    .cursor {
+      position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); mix-blend-mode: difference;
+      transition: transform 0.15s ease, opacity 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 9998; pointer-events: none;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--accent); opacity: 0.5;
+      transition: transform 0.35s ease, opacity 0.2s;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ===== PARTICLE CANVAS ===== */
+    #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 8px; }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+    section { padding: 7rem 0; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      backdrop-filter: blur(18px) saturate(160%);
+      background: rgba(10,14,23,0.7);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.4s;
+    }
+    [data-theme="light"] nav { background: rgba(240,244,255,0.75); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
+      color: var(--accent); text-decoration: none; letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--text); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      color: var(--text2); text-decoration: none; font-size: 0.82rem;
+      font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
+      transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after {
+      content:''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1.5px;
+      background: var(--accent); transition: width 0.25s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+    .theme-toggle {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); width: 38px; height: 38px; border-radius: 50%;
+      cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { background: var(--accent); color: #fff; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 6rem; position: relative; overflow: hidden;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--accent); font-size: 0.75rem; padding: 0.35rem 1rem;
+      border-radius: 100px; margin-bottom: 1.5rem; letter-spacing: 0.08em;
+    }
+    .hero-tag span { width: 7px; height: 7px; border-radius: 50%; background: var(--accent2); display: inline-block; animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+    .hero-name {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -2px;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .hero-name .accent { color: var(--accent); }
+    .hero-role {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem); color: var(--text2); margin-bottom: 1.5rem;
+    }
+    .hero-desc { color: var(--text2); font-size: 0.9rem; line-height: 1.9; max-width: 500px; margin-bottom: 2.5rem; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 10px; font-family: 'DM Mono', monospace;
+      font-size: 0.82rem; letter-spacing: 0.05em; text-decoration: none;
+      transition: all 0.25s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #0a0e17; font-weight: 500; }
+    .btn-primary:hover { background: #7dd3fc; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,189,248,0.35); }
+    .btn-outline {
+      background: transparent; color: var(--text); border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* Hero Right */
+    .hero-visual { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .hero-avatar-wrap {
+      position: relative; width: 260px; height: 260px;
+    }
+    .hero-avatar-ring {
+      position: absolute; inset: -12px; border-radius: 50%;
+      border: 2px dashed var(--accent); opacity: 0.4;
+      animation: spin 18s linear infinite;
+    }
+    .hero-avatar-ring2 {
+      position: absolute; inset: -24px; border-radius: 50%;
+      border: 1px solid var(--accent2); opacity: 0.2;
+      animation: spin 30s linear infinite reverse;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero-avatar {
+      width: 260px; height: 260px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--surface2);
+      background: var(--surface); display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative; z-index: 1;
+    }
+    .avatar-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; background: var(--surface2);
+      color: var(--text3); font-size: 0.75rem; gap: 0.5rem;
+    }
+    .avatar-placeholder i { font-size: 4rem; color: var(--accent); opacity: 0.5; }
+    .hero-stats { display: flex; gap: 1.5rem; }
+    .stat-pill {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.75rem 1.25rem; text-align: center;
+    }
+    .stat-pill .num { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+    .stat-pill .lbl { font-size: 0.68rem; color: var(--text3); letter-spacing: 0.05em; }
+    .hero-social { display: flex; gap: 0.75rem; }
+    .social-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text2); text-decoration: none; font-size: 1rem;
+      transition: all 0.22s;
+    }
+    .social-icon:hover { background: var(--accent); color: #0a0e17; transform: translateY(-3px); box-shadow: var(--glow); }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.2em; color: var(--accent);
+      text-transform: uppercase; margin-bottom: 0.75rem; font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1.15;
+    }
+    .section-subtitle { color: var(--text2); font-size: 0.9rem; margin-top: 0.75rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .title-line { display: inline-block; width: 48px; height: 3px; background: var(--accent); border-radius: 4px; margin: 1rem auto 0; display: block; }
+
+    /* ===== ABOUT ===== */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .code-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; font-size: 0.8rem;
+      box-shadow: var(--card-shadow);
+    }
+    .code-bar {
+      background: var(--surface); padding: 0.7rem 1rem;
+      display: flex; gap: 0.5rem; align-items: center; border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
+    .code-filename { margin-left: 0.5rem; color: var(--text3); font-size: 0.72rem; }
+    .code-body { padding: 1.5rem; line-height: 2; }
+    .kw { color: #c792ea; } .str { color: var(--accent2); } .key { color: var(--accent); }
+    .num-c { color: var(--accent3); } .cm { color: var(--text3); font-style: italic; }
+    .about-content h3 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+    .about-content p { color: var(--text2); font-size: 0.88rem; line-height: 1.9; margin-bottom: 1rem; }
+    .about-badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .badge {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--accent); font-size: 0.72rem; padding: 0.3rem 0.9rem;
+      border-radius: 100px; letter-spacing: 0.04em;
+    }
+
+    /* ===== EXPERIENCE ===== */
+    .timeline { position: relative; padding-left: 2.5rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0.75rem; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 3rem; }
+    .timeline-dot {
+      position: absolute; left: -2.5rem; top: 0.3rem;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg2); z-index: 1;
+    }
+    .exp-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem 2rem;
+      box-shadow: var(--card-shadow); transition: all 0.25s;
+    }
+    .exp-card:hover { border-color: var(--accent); transform: translateX(4px); box-shadow: var(--glow); }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .exp-role { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .exp-company { color: var(--accent); font-size: 0.85rem; margin-bottom: 0.35rem; }
+    .exp-period {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text3); font-size: 0.7rem; padding: 0.25rem 0.75rem;
+      border-radius: 100px; white-space: nowrap;
+    }
+    .exp-bullets { margin-top: 1rem; padding-left: 1.2rem; }
+    .exp-bullets li { color: var(--text2); font-size: 0.82rem; line-height: 1.8; margin-bottom: 0.4rem; }
+    .exp-bullets li span { color: var(--accent2); font-weight: 500; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .exp-tag {
+      background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2);
+      color: var(--accent); font-size: 0.68rem; padding: 0.2rem 0.65rem;
+      border-radius: 6px; letter-spacing: 0.03em;
+    }
+
+    /* ===== PROJECTS ===== */
+    #projects { background: var(--bg2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--card-shadow); transition: all 0.3s;
+      display: flex; flex-direction: column; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-6px); box-shadow: var(--glow); }
+    .project-card:hover::before { opacity: 1; }
+    .project-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(56,189,248,0.1); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 1.25rem; color: var(--accent);
+    }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+    .project-desc { color: var(--text2); font-size: 0.8rem; line-height: 1.8; flex: 1; margin-bottom: 1.25rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .project-tag {
+      background: var(--surface2); color: var(--text2);
+      font-size: 0.65rem; padding: 0.2rem 0.6rem; border-radius: 6px; letter-spacing: 0.03em;
+    }
+    .project-links { display: flex; gap: 0.75rem; margin-top: auto; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--accent); font-size: 0.75rem; text-decoration: none;
+      border: 1px solid var(--border); padding: 0.35rem 0.85rem;
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .project-link:hover { background: var(--accent); color: #0a0e17; border-color: var(--accent); }
+    .project-ribbon {
+      position: absolute; top: 1rem; right: -2rem;
+      background: var(--accent3); color: #0a0e17; font-size: 0.62rem;
+      font-weight: 700; padding: 0.2rem 2.5rem; transform: rotate(35deg);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .skill-group {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--card-shadow); transition: border-color 0.25s;
+    }
+    .skill-group:hover { border-color: var(--accent); }
+    .skill-group-title {
+      font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+      color: var(--text); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .skill-group-title i { color: var(--accent); font-size: 1rem; }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-chip {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text2); font-size: 0.72rem; padding: 0.3rem 0.8rem;
+      border-radius: 8px; transition: all 0.2s; letter-spacing: 0.02em;
+    }
+    .skill-chip:hover { background: rgba(56,189,248,0.12); color: var(--accent); border-color: var(--accent); }
+    .skill-chip.hot { border-color: rgba(245,158,11,0.4); color: var(--accent3); background: rgba(245,158,11,0.08); }
+
+    /* ===== STRENGTHS ===== */
+    #strengths { background: var(--bg); }
+    .strengths-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .strength-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.75rem;
+      box-shadow: var(--card-shadow); transition: all 0.25s; text-align: center;
+    }
+    .strength-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+    .strength-icon {
+      width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 1.25rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+    }
+    .strength-card h4 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--text); }
+    .strength-card p { color: var(--text2); font-size: 0.78rem; line-height: 1.8; }
+
+    /* ===== QUOTES ===== */
+    #quotes { background: var(--bg2); }
+    .quote-display {
+      max-width: 760px; margin: 0 auto; text-align: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; padding: 3.5rem 3rem;
+      box-shadow: var(--card-shadow); position: relative;
+    }
+    .quote-mark { font-family: 'Instrument Serif', serif; font-size: 8rem; color: var(--accent); opacity: 0.12; position: absolute; top: -1rem; left: 2rem; line-height: 1; }
+    .quote-text {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(1.15rem, 2.5vw, 1.5rem); color: var(--text);
+      line-height: 1.65; position: relative; z-index: 1;
+    }
+    .quote-author { margin-top: 1.5rem; color: var(--accent); font-size: 0.78rem; letter-spacing: 0.08em; }
+    .quote-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.75rem; }
+    .quote-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.2s; }
+    .quote-dot.active { background: var(--accent); }
+    .quote-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+    .quote-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text2); width: 38px; height: 38px; border-radius: 50%;
+      cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .quote-btn:hover { background: var(--accent); color: #0a0e17; }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-info h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+    .contact-info p { color: var(--text2); font-size: 0.85rem; line-height: 1.9; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.9rem 1.25rem;
+      text-decoration: none; color: var(--text); transition: all 0.2s;
+    }
+    .contact-link-item:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-link-item i { color: var(--accent); font-size: 1rem; width: 20px; text-align: center; }
+    .contact-link-item .cli-label { font-size: 0.68rem; color: var(--text3); display: block; }
+    .contact-link-item .cli-val { font-size: 0.82rem; color: var(--text); }
+    .contact-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.72rem; color: var(--text3); margin-bottom: 0.4rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .form-group input, .form-group textarea {
+      width: 100%; background: var(--bg2); border: 1px solid var(--border);
+      color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.82rem;
+      padding: 0.75rem 1rem; border-radius: 10px; outline: none; transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { min-height: 120px; }
+    .form-submit {
+      width: 100%; background: var(--accent); color: #0a0e17;
+      font-family: 'DM Mono', monospace; font-size: 0.82rem; font-weight: 500;
+      padding: 0.85rem; border: none; border-radius: 10px; cursor: pointer;
+      transition: all 0.25s; letter-spacing: 0.05em;
+    }
+    .form-submit:hover { background: #7dd3fc; transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--border);
+      padding: 2.5rem 0; text-align: center; position: relative; z-index: 1;
+    }
+    footer .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; }
+    footer p { color: var(--text3); font-size: 0.75rem; }
+    footer .footer-social { display: flex; justify-content: center; gap: 0.75rem; margin: 1.25rem 0; }
+
+    /* ===== BACK TO TOP ===== */
+    .back-top {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--accent); color: #0a0e17; border: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; opacity: 0; pointer-events: none;
+      transition: all 0.3s; box-shadow: 0 4px 20px rgba(56,189,248,0.4);
+    }
+    .back-top.visible { opacity: 1; pointer-events: all; }
+    .back-top:hover { transform: translateY(-3px); }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-visual { order: -1; }
+      .skills-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg2); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); gap: 1rem; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .strengths-grid { grid-template-columns: 1fr 1fr; }
+      section { padding: 5rem 0; }
+      .hero-stats { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .strengths-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 1.25rem; }
+      .hero-avatar-wrap { width: 200px; height: 200px; }
+      .hero-avatar { width: 200px; height: 200px; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>V L Sivasai Mani Harshith Bhattaram</h2>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <canvas id="particles"></canvas>
+
+  <!-- ===== NAV ===== -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="#hero">HB<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Stack</a></li>
+        <li><a href="#strengths">Strengths</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div style="display:flex;gap:.75rem;align-items:center;">
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fa fa-moon"></i></button>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-tag"><span></span> Open to Opportunities</div>
+          <h1 class="hero-name"><span class="accent">Harshith</span> Bhattaram</h1>
+          <p class="hero-role">Data Scientist & AI/ML Enthusiast</p>
+          <p class="hero-desc">
+            Building end-to-end Data and ML systems that are powerful, explainable, and production-ready.
+            From fleet telematics to healthcare AI and finance, I turn raw data into decisions that matter.
+          </p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary"><i class="fa fa-rocket"></i> View Projects</a>
+            <a href="#contact" class="btn btn-outline"><i class="fa fa-paper-plane"></i> Get in Touch</a>
+            <!-- Replace # below with actual resume PDF link -->
+            <a href="harshith_resume.pdf" class="btn btn-outline" download><i class="fa fa-download"></i> Resume</a>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="hero-avatar-wrap">
+            <div class="hero-avatar-ring"></div>
+            <div class="hero-avatar-ring2"></div>
+            <div class="hero-avatar">
+              <img src="professional_photo.png" alt="Harshith Bhattaram" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;"/>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#education" class="nav-link">Education</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#skills" class="nav-link">Skills</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#experience" class="nav-link">Experience</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#projects" class="nav-link">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-pill"><div class="num">2.5+</div><div class="lbl">Yrs Experience</div></div>
+            <div class="stat-pill"><div class="num">6+</div><div class="lbl">Projects</div></div>
+            <div class="stat-pill"><div class="num">3+</div><div class="lbl">Domains</div></div>
+          </div>
+          <div class="hero-social">
+            <a href="https://www.linkedin.com/in/harshith68/" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/maniharshith68" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:harshithbhattaram@gmail.com" class="social-icon" title="Email"><i class="fa fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// who I am</p>
+        <h2 class="section-title">The Data Behind the Developer</h2>
+        <span class="title-line"></span>
+      </div>
+      <div class="about-grid">
+        <div class="code-card reveal">
+          <div class="code-bar">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+            <span class="code-filename">harshith.py</span>
+          </div>
+          <div class="code-body">
+            <span class="cm"># Who I am in Python 🐍</span><br/>
+            <span class="kw">class</span> <span class="key">Harshith</span>:<br/>
+            &nbsp;&nbsp;<span class="kw">def</span> <span class="key">__init__</span>(self):<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;self.role = <span class="str">"Data Scientist"</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;self.education = <span class="str">"MS CS @ UB"</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;self.experience = <span class="num-c">2.5</span> <span class="cm"># years</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;self.location = <span class="str">"NY, USA"</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;self.domains = [<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Fleet Telematics"</span>,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Healthcare AI"</span>,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Finance ML"</span><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;]<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;self.superpower = <span class="str">"XAI Pipelines"</span><br/><br/>
+            &nbsp;&nbsp;<span class="kw">def</span> <span class="key">passion</span>(self):<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">"AI that explains itself"</span>
+          </div>
+        </div>
+        <div class="about-content reveal">
+          <h3>From Data to Decisions</h3>
+          <p>I'm a Data Scientist with 2.5 years of industry experience building end-to-end ML pipelines that actually ship. At LocoNav, I worked across computer vision, NLP, time-series forecasting, and graph-based optimization — always with a focus on production-quality, low-latency systems.</p>
+          <p>Currently pursuing my MS in Computer Science at the University at Buffalo, I'm deepening my expertise in Generative AI, Multimodal RAG, and Explainable AI. I believe the best models are ones you can trust — and explain.</p>
+          <p>I'm actively seeking roles in <strong style="color:var(--accent)">Data Science, ML Engineering, AI Engineering,</strong> and <strong style="color:var(--accent)">Data Engineering</strong> where I can build impactful, interpretable systems at scale.</p>
+          <div class="about-badges">
+            <span class="badge">🎓 MS CS @ UB — Feb 2026</span>
+            <span class="badge">📍 NY, USA</span>
+            <span class="badge">✉️ harshithbhattaram@gmail.com</span>
+            <span class="badge">🚀 Open to Work</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// where I've been</p>
+        <h2 class="section-title">Battle-Tested in Production</h2>
+        <span class="title-line"></span>
+      </div>
+      <div class="timeline reveal">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="exp-card">
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Software Engineer — Data Scientist</div>
+                <div class="exp-company">LocoNav Fleet Management Solutions · Gurugram, India</div>
+              </div>
+              <span class="exp-period">Jun 2022 – Jun 2024</span>
+            </div>
+            <ul class="exp-bullets">
+              <li>Built a driver drowsiness & intoxication classifier on <span>10k+ video frames</span> — achieving <span>87% accuracy</span> with OpenCV + TensorFlow.</li>
+              <li>Reduced <span>false negative drowsiness detections by 25%</span> via facial landmark tracking and yawn-angle alertness modeling.</li>
+              <li>Cut model inference latency <span>by 20%</span> via optimized pipeline triggering real-time low-latency in-app alerts.</li>
+              <li>Developed GBM + LSTM ETA prediction models on <span>50k+ trips</span>, improving forecast accuracy by <span>15%</span>.</li>
+              <li>Reduced average trip duration <span>by 12%</span> via graph-based route optimization with real-time traffic data.</li>
             </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="exp-tags">
+              <span class="exp-tag">OpenCV</span><span class="exp-tag">TensorFlow</span><span class="exp-tag">LSTM</span>
+              <span class="exp-tag">GBM</span><span class="exp-tag">GPS Telematics</span><span class="exp-tag">Graph Optimization</span>
+              <span class="exp-tag">Computer Vision</span><span class="exp-tag">Real-time ML</span>
             </div>
+          </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Hi, I'm <span class="highlight">V L Sivasai Mani Harshith Bhattaram</span>
-                </h1>
-                <h2 class="hero-subtitle">AI/ML Engineer & Data Scientist</h2>
-                <p class="hero-description">
-                    Passionate about turning complex data into real-world AI solutions. 
-                    Specialized in ML models, LLMs, and building end-to-end data science pipelines.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-                <div class="hero-social">
-                    <a href="https://www.linkedin.com/in/harshith68" target="_blank" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/maniharshith68" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="mailto:bhattaramvlsivasaimaniharshith@gmail.com" class="social-link">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--accent2)"></div>
+          <div class="exp-card">
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Data Science Intern</div>
+                <div class="exp-company">LocoNav Fleet Management Solutions · Gurugram, India</div>
+              </div>
+              <span class="exp-period">Jan 2022 – May 2022</span>
             </div>
-            <div class="hero-image">
-                <div class="hero-photo">
-                    <img src="./professional_photo.png" alt="V L Sivasai Mani Harshith Bhattaram" class="profile-image" onload="this.nextElementSibling.style.display='none';" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="image-placeholder">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                </div>
+            <ul class="exp-bullets">
+              <li>Built a predictive maintenance pipeline from <span>time-series telemetry data</span>, handling class imbalance via SMOTE.</li>
+              <li>Achieved <span>85% precision</span> in component failure prediction using ensemble classifiers with engineered degradation features.</li>
+              <li>Reduced <span>unplanned vehicle downtime by 18%</span>, deployed automated ML alert pipeline into fleet operations dashboard.</li>
+            </ul>
+            <div class="exp-tags">
+              <span class="exp-tag">Time-Series</span><span class="exp-tag">SMOTE</span><span class="exp-tag">Ensemble Classifiers</span>
+              <span class="exp-tag">Feature Engineering</span><span class="exp-tag">MLOps</span><span class="exp-tag">FastAPI</span>
             </div>
+          </div>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        
-                        I’m an AI & Machine Learning Engineer passionate about transforming complex data into intelligent,
-                        real-world solutions. With hands-on experience in machine learning, deep learning, and computer vision,
-                        I specialize in building end-to-end AI systems — from data preprocessing and model development to
-                        scalable deployment in production environments.
-                    </p>
-                    <p>
-                        At LocoNav, I engineered real-time driver safety monitoring systems using LSTM models, TensorFlow,
-                        and OpenCV, achieving 87% accuracy in detecting drowsiness and intoxication from live video feeds.
-                        I also developed scalable Python backends and RESTful APIs for large-scale fleet management platforms,
-                        optimizing performance through Flask, Pandas, SQL, Docker, Jenkins, and AWS.
-                    </pp>
-                    <p>
-                        My toolkit includes PyTorch, Scikit-learn, Hugging Face, LangChain, and OpenAI APIs, with strong proficiency
-                        in MLOps and cloud platforms like AWS, Azure, and Google Cloud AI. I leverage Docker, Kubernetes, MLflow, and
-                        FastAPI to deliver robust, production-grade AI solutions.
-                    </p>
-                </div>
-            </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// what I've built</p>
+        <h2 class="section-title">Proof of Work</h2>
+        <p class="section-subtitle">End-to-end systems — from messy data to deployed, explainable intelligence.</p>
+        <span class="title-line"></span>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-credit-card"></i></div>
+          <h3 class="project-title">Credit Card Churn Prediction + XAI Dashboard</h3>
+          <p class="project-desc">End-to-end ML pipeline using XGBoost & Logistic Regression on 10k+ customers. Achieved ROC-AUC of 0.99 and 90.5% recall. Deployed an interactive Streamlit app with SHAP global importance & waterfall plots for full model interpretability.</p>
+          <div class="project-tags">
+            <span class="project-tag">XGBoost</span><span class="project-tag">SHAP</span><span class="project-tag">Streamlit</span>
+            <span class="project-tag">Scikit-Learn</span><span class="project-tag">EDA</span><span class="project-tag">XAI</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/Card-Retention-Intelligence" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </section>
 
-
-    <!-- Education Section -->
-    <section id="education" class="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-timeline">
-                <div class="education-item">
-                    <div class="education-content">
-                        <h3>Master of Science in Computer Science</h3>
-                        <h4>University at Buffalo – The State University of New York</h4>
-                        <span class="education-date">December 2025 (Expected)</span>
-                        <p class="education-gpa">GPA: 3.54/4.0</p>
-                        <div class="education-coursework">
-                            <h5>Relevant Coursework:</h5>
-                            <div class="coursework-tags">
-                                <span class="course-tag">Machine Learning</span>
-                                <span class="course-tag">Statistical Data Mining</span>
-                                <span class="course-tag">Data Intensive Computing</span>
-                                <span class="course-tag">Computer Vision</span>
-                                <span class="course-tag">Deep Learning</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="education-item">
-                    <div class="education-content">
-                        <h3>Bachelor of Technology in Computer Science Engineering</h3>
-                        <h4>Vellore Institute of Technology, Vellore</h4>
-                        <span class="education-date">July 2018 - June 2022</span>
-                        <p class="education-gpa">GPA: 8.7/10</p>
-                        <div class="education-coursework">
-                            <h5>Relevant Coursework:</h5>
-                            <div class="coursework-tags">
-                                <span class="course-tag">Artificial Intelligence</span>
-                                <span class="course-tag">Natural Language Processing</span>
-                                <span class="course-tag">Image Processing</span>
-                                <span class="course-tag">Machine Learning</span>
-                                <span class="course-tag">Data Structures and Algorithms</span>
-                                <span class="course-tag">Database Management System</span>
-                                <span class="course-tag">Object Oriented Programming</span>
-                                <span class="course-tag">Statistics</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Project 2 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-hospital"></i></div>
+          <h3 class="project-title">Healthcare Patient Readmission Risk Modeling</h3>
+          <p class="project-desc">Analyzed 100k+ row UCI diabetes dataset with SQL profiling. Engineered 44 features, validated 11 risk factors via chi-square & Welch's t-tests. Auto-generated clinical decision reports with SHAP waterfall charts, deployed on cloud.</p>
+          <div class="project-tags">
+            <span class="project-tag">XGBoost</span><span class="project-tag">SQL</span><span class="project-tag">SHAP</span>
+            <span class="project-tag">Hypothesis Testing</span><span class="project-tag">AWS</span><span class="project-tag">Clinical AI</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/Patient-Readmission-Risk" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Programming Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">R</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                        <span class="skill-tag">React JS</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-brain"></i> AI/ML Technologies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">LLM</span>
-                        <span class="skill-tag">RAG</span>
-                        <span class="skill-tag">Agentic AI</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Hugging Face</span>
-                        <span class="skill-tag">NLP</span>
-                        <span class="skill-tag">Computer Vision</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i> Data & Analytics</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">NumPy</span>
-                        <span class="skill-tag">Scikit-Learn</span>
-                        <span class="skill-tag">Plotly</span>
-                        <span class="skill-tag">Seaborn</span>
-                        <span class="skill-tag">Statistics</span>
-                        <span class="skill-tag">EDA</span>
-                        <span class="skill-tag">Data Mining</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Azure</span>
-                        <span class="skill-tag">GCP</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Jenkins</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">MlOps</span>
-                        <span class="skill-tag">Kafka</span>
-                    </div>
-                </div>
-            </div>
+        <!-- Project 3 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-comments"></i></div>
+          <h3 class="project-title">NLP Sentiment & Topic Modeling Platform</h3>
+          <p class="project-desc">Full NLP pipeline processing 24k+ Amazon reviews with VADER + DistilBERT sentiment analysis and LDA topic modeling. Modular spaCy preprocessing, parquet schema, 4-page interactive Plotly dashboard with time-series trend analysis.</p>
+          <div class="project-tags">
+            <span class="project-tag">DistilBERT</span><span class="project-tag">VADER</span><span class="project-tag">LDA</span>
+            <span class="project-tag">spaCy</span><span class="project-tag">Plotly</span><span class="project-tag">Streamlit</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/Amazon-Review-Intelligence" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Professional Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Software Engineer I</h3>
-                        <h4>LocoNav</h4>
-                        <span class="timeline-date">June 2022 – June 2024</span>
-                        <p>Gurugram, India</p>
-                        <ul>
-                            <li>Designed and deployed real-time video monitoring system using LSTM models with 87% accuracy</li>
-                            <li>Integrated vital signs analysis and facial landmark tracking, reducing false negatives by 25%</li>
-                            <li>Built scalable RESTful APIs using Python and Flask, improving data exchange speed by 40%</li>
-                            <li>Analyzed 100k+ records using Pandas and SQL for real-time fleet monitoring</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <h3>Software Developer Intern</h3>
-                        <h4>LocoNav</h4>
-                        <span class="timeline-date">Jan 2022 – May 2022</span>
-                        <p>Gurugram, India</p>
-                        <ul>
-                            <li>Developed high-performance geolocation and routing service using HERE Maps API</li>
-                            <li>Reduced route calculation time by 30% and boosted user data interaction by 45%</li>
-                            <li>Delivered customizable features with RESTful APIs and React.js</li>
-                            <li>Implemented Docker-based microservices and automated CI/CD pipelines on AWS</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <!-- Project 4 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-x-ray"></i></div>
+          <h3 class="project-title">Clinical Radiology Report Generation via Multimodal RAG</h3>
+          <p class="project-desc">Multimodal RAG pipeline on MIMIC-CXR (250k+ chest X-ray pairs). BioMedCLIP (ViT-B/16) cross-modal embeddings, FAISS retrieval, dual-layer generation. &lt;1s query latency via memory-constrained architecture. Evaluated with CheXbert, BLEU, ROUGE-L, BERTScore.</p>
+          <div class="project-tags">
+            <span class="project-tag">BioMedCLIP</span><span class="project-tag">FAISS</span><span class="project-tag">RAG</span>
+            <span class="project-tag">ViT</span><span class="project-tag">BERTScore</span><span class="project-tag">MIMIC-CXR</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/rag-rrg" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>RAG Pipeline for Document Querying</h3>
-                        <p>Developed a RAG pipeline leveraging LangChain, HuggingFace Transformers, and OpenAI APIs, improving contextual document query accuracy and minimizing LLM hallucinations by 40%.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">LangChain</span>
-                            <span class="tech-tag">HuggingFace</span>
-                            <span class="tech-tag">OpenAI</span>
-                            <span class="tech-tag">Vector DB</span>
-                        </div>
-                        <!-- <div class="project-links">
-                            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>Climate Impact on Crop Yields Prediction</h3>
-                        <p>Performed data analysis and developed an LSTM model for crop yield prediction using climate data, achieving 98% predictive accuracy for reliable forecasting of yield trends.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">LSTM</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Data Analysis</span>
-                        </div>
-                        <!-- <div class="project-links">
-                            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>Real-time Driver Safety Monitoring</h3>
-                        <p>Designed and deployed a real-time video monitoring system using LSTM models and OpenCV to detect driver drowsiness and intoxication, achieving 87% accuracy on 10,000+ video frames.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">LSTM</span>
-                            <span class="tech-tag">OpenCV</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">Computer Vision</span>
-                        </div>
-                        <!-- <div class="project-links">
-                            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>Multiple Face Detection Attendance System</h3>
-                        <p>Developed a real-time multiple face detection attendance monitoring system using OpenCV and TensorFlow, improving confidence and accuracy from 45% to 76% for automated attendance tracking.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">OpenCV</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Face Detection</span>
-                        </div>
-                        <!-- <div class="project-links">
-                            <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
+        <!-- Project 5 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-arrow-trend-up"></i></div>
+          <h3 class="project-title">MLOps Stock Price Forecasting Pipeline with Drift Monitoring</h3>
+          <p class="project-desc">Full MLOps pipeline — daily yFinance ingestion into S3, ETL via Apache Airflow across 4 DAGs. RF, XGBoost & LSTM models served via Dockerized REST API. Evidently AI + KS-tests for data & prediction drift detection per ticker, with CI/CD retraining triggers via GitHub Actions.</p>
+          <div class="project-tags">
+            <span class="project-tag">Apache Airflow</span><span class="project-tag">Evidently AI</span>
+            <span class="project-tag">XGBoost</span><span class="project-tag">LSTM</span>
+            <span class="project-tag">Docker</span><span class="project-tag">AWS S3</span>
+            <span class="project-tag">GitHub Actions</span><span class="project-tag">CI/CD</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/stock-forecast-mlops" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </section>
 
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Connect!</h3>
-                    <p>I'm always interested in new opportunities and collaborations. Feel free to reach out!</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>bhattaramvlsivasaimaniharshith@gmail.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>(716) 232-0462</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Buffalo, NY</span>
-                        </div>
-                    </div>
-                    <div class="contact-social">
-                        <a href="https://www.linkedin.com/in/harshith68" target="_blank" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                    <a href="https://github.com/maniharshith68" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                        <a href="mailto:bhattaramvlsivasaimaniharshith@gmail.com" class="social-link">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div> -->
-            </div>
+        <!-- Project 6 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-chart-line"></i></div>
+          <h3 class="project-title">Automated Time-Series Stock Forecasting with Cloud Deployment</h3>
+          <p class="project-desc">Multi-model forecasting system for 10 tickers (ARIMA, Prophet, PyTorch LSTM) with 18% RMSE improvement over naive baseline on 10 years of OHLCV data. Auto daily retraining via GitHub Actions + AWS Lambda + EventBridge, artifacts in S3, Docker images in ECR, live Plotly/Streamlit dashboard with 95% CI bands.</p>
+          <div class="project-tags">
+            <span class="project-tag">ARIMA</span><span class="project-tag">Prophet</span>
+            <span class="project-tag">PyTorch LSTM</span><span class="project-tag">AWS Lambda</span>
+            <span class="project-tag">EventBridge</span><span class="project-tag">ECR</span>
+            <span class="project-tag">Streamlit</span><span class="project-tag">Plotly</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/stock-forecasting-pipeline" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 V L Sivasai Mani Harshith Bhattaram. All rights reserved.</p>
+        <!-- Project 7 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-stethoscope"></i></div>
+          <h3 class="project-title">QLoRA Fine-Tuning Pipeline for Medical Q&A with FastAPI Serving</h3>
+          <p class="project-desc">Fine-tuned a 7B LLM (LLaMA-3/Mistral) on 2k+ curated medical Q&A examples using QLoRA via HuggingFace TRL + PEFT on a free GPU. Quantified performance delta vs GPT-4o baseline with ROUGE & BLEU. LoRA adapter served via FastAPI endpoint backed by vLLM for efficient inference.</p>
+          <div class="project-tags">
+            <span class="project-tag">QLoRA</span><span class="project-tag">LLaMA-3</span>
+            <span class="project-tag">HuggingFace TRL</span><span class="project-tag">PEFT</span>
+            <span class="project-tag">vLLM</span><span class="project-tag">FastAPI</span>
+            <span class="project-tag">ROUGE</span><span class="project-tag">BLEU</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
         </div>
-    </footer>
 
-    <script src="script.js"></script>
+        <!-- Project 8 -->
+        <div class="project-card reveal">
+          <div class="project-icon"><i class="fa fa-briefcase"></i></div>
+          <h3 class="project-title">NLP-Driven Job Market Intelligence Platform</h3>
+          <p class="project-desc">NLP analytics pipeline over 2k+ job descriptions using BERTopic + TF-IDF vectorization and NER for skill extraction. Identified top 10 in-demand skills stored in PostgreSQL. Interactive Plotly dashboard for skill frequency, salary-to-skill correlation & keyword trends. LLM-powered (OpenAI) resume fit scoring module.</p>
+          <div class="project-tags">
+            <span class="project-tag">BERTopic</span><span class="project-tag">TF-IDF</span>
+            <span class="project-tag">NER</span><span class="project-tag">PostgreSQL</span>
+            <span class="project-tag">OpenAI API</span><span class="project-tag">Plotly</span>
+            <span class="project-tag">LLM Scoring</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/maniharshith68/job-market-intelligence" target="_blank" class="project-link"><i class="fab fa-github"></i> Code</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// my toolkit</p>
+        <h2 class="section-title">The Full Arsenal</h2>
+        <p class="section-subtitle">Tools I use daily — and ones I'm actively sharpening. <span style="color:var(--accent3)">★</span> marks high-demand market skills.</p>
+        <span class="title-line"></span>
+      </div>
+      <div class="skills-layout reveal">
+        <div class="skill-group">
+          <div class="skill-group-title"><i class="fa fa-code"></i> Languages & Core Tools</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Python</span><span class="skill-chip">SQL</span><span class="skill-chip">R</span>
+            <span class="skill-chip">Bash</span><span class="skill-chip">PostgreSQL</span><span class="skill-chip">Git</span>
+            <span class="skill-chip">Docker</span><span class="skill-chip hot">★ Spark PySpark</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><i class="fa fa-robot"></i> ML & Data Science</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Scikit-Learn</span><span class="skill-chip">XGBoost</span><span class="skill-chip">Random Forest</span>
+            <span class="skill-chip">ARIMA</span><span class="skill-chip">SMOTE</span><span class="skill-chip">PCA</span>
+            <span class="skill-chip">SHAP</span><span class="skill-chip">LIME</span><span class="skill-chip">Hypothesis Testing</span>
+            <span class="skill-chip hot">★ MLflow</span><span class="skill-chip hot">★ DVC</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><i class="fa fa-brain"></i> Deep Learning & NLP</div>
+          <div class="skill-chips">
+            <span class="skill-chip">TensorFlow</span><span class="skill-chip">PyTorch</span><span class="skill-chip">Keras</span>
+            <span class="skill-chip">HuggingFace</span><span class="skill-chip">DistilBERT</span><span class="skill-chip">BioMedCLIP</span>
+            <span class="skill-chip">OpenCV</span><span class="skill-chip">spaCy</span><span class="skill-chip">LDA</span>
+            <span class="skill-chip">TF-IDF</span><span class="skill-chip">NER</span><span class="skill-chip">BERTopic</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><i class="fa fa-sparkles"></i> Generative AI & LLMs</div>
+          <div class="skill-chips">
+            <span class="skill-chip">LangChain</span><span class="skill-chip">LangGraph</span><span class="skill-chip">RAG</span>
+            <span class="skill-chip">FAISS</span><span class="skill-chip">QLoRA</span><span class="skill-chip">Fine-tuning</span>
+            <span class="skill-chip">OpenAI API</span><span class="skill-chip">Gemini</span><span class="skill-chip">Groq</span>
+            <span class="skill-chip">Llama</span><span class="skill-chip">VLMs</span><span class="skill-chip">vLLM</span><span class="skill-chip">PEFT</span><span class="skill-chip hot">★ TRL</span><span class="skill-chip hot">★ Prompt Engineering</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><i class="fa fa-cloud"></i> Cloud, MLOps & Deployment</div>
+          <div class="skill-chips">
+            <span class="skill-chip">AWS S3</span><span class="skill-chip">AWS Lambda</span><span class="skill-chip">AWS RDS</span>
+            <span class="skill-chip">Azure</span><span class="skill-chip">GCP</span><span class="skill-chip">FastAPI</span>
+            <span class="skill-chip">Streamlit</span><span class="skill-chip">Docker</span><span class="skill-chip">Render</span>
+            <span class="skill-chip hot">★ Airflow</span><span class="skill-chip hot">★ Snowflake</span><span class="skill-chip hot">★ dbt</span><span class="skill-chip hot">★ CI/CD</span><span class="skill-chip">AWS ECR</span><span class="skill-chip">AWS EventBridge</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title"><i class="fa fa-chart-bar"></i> Visualization & Data Handling</div>
+          <div class="skill-chips">
+            <span class="skill-chip">Tableau</span><span class="skill-chip">Plotly</span><span class="skill-chip">Matplotlib</span>
+            <span class="skill-chip">Seaborn</span><span class="skill-chip">Pandas</span><span class="skill-chip">NumPy</span>
+            <span class="skill-chip">EDA</span><span class="skill-chip">Feature Engineering</span>
+            <span class="skill-chip">Parquet</span><span class="skill-chip hot">★ Kafka</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STRENGTHS ===== -->
+  <section id="strengths">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// my edge</p>
+        <h2 class="section-title">Things I'm Good At</h2>
+        <p class="section-subtitle">Not just tools, real strengths that show up in every project.</p>
+        <span class="title-line"></span>
+      </div>
+      <div class="strengths-grid">
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(56,189,248,0.12)"><i class="fa fa-magnifying-glass-chart" style="color:var(--accent)"></i></div>
+          <h4>Explainable AI</h4>
+          <p>I don't just build black boxes. I build models you can explain to a doctor, an exec, or a regulator using SHAP, LIME, and TreeExplainer.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(6,214,160,0.12)"><i class="fa fa-pipe-section" style="color:var(--accent2)"></i></div>
+          <h4>End-to-End ML Pipelines</h4>
+          <p>From raw data ingestion to cloud deployment, I own the full stack. ETL, feature engineering, model training, validation, and production monitoring.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(245,158,11,0.12)"><i class="fa fa-bolt" style="color:var(--accent3)"></i></div>
+          <h4>Low-Latency Production Systems</h4>
+          <p>Built real-time inference pipelines with &lt;1s latency at scale. I understand the gap between a notebook model and a production system.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(56,189,248,0.12)"><i class="fa fa-flask" style="color:var(--accent)"></i></div>
+          <h4>Statistical Rigor</h4>
+          <p>Hypothesis testing, chi-square, Welch's t-tests, cross-validation, I validate results statistically, not just by vibes or leaderboard scores.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(6,214,160,0.12)"><i class="fa fa-layer-group" style="color:var(--accent2)"></i></div>
+          <h4>Multi-Domain Adaptability</h4>
+          <p>Fleet telematics, clinical healthcare, finance | I've applied ML across radically different domains, adapting techniques to context rapidly.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(245,158,11,0.12)"><i class="fa fa-wand-magic-sparkles" style="color:var(--accent3)"></i></div>
+          <h4>Generative AI & RAG</h4>
+          <p>LangChain, LangGraph, FAISS, multimodal RAG | I build GenAI systems that are grounded, efficient, and actually useful in real applications.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(56,189,248,0.12)"><i class="fa fa-eye" style="color:var(--accent)"></i></div>
+          <h4>Computer Vision</h4>
+          <p>Real-world CV at scale | drowsiness detection, facial landmark tracking on video streams, and multimodal image-text alignment pipelines.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(6,214,160,0.12)"><i class="fa fa-users" style="color:var(--accent2)"></i></div>
+          <h4>Cross-Functional Collaboration</h4>
+          <p>Experienced in Agile workflows — planning, standups, retrospectives. I bridge the gap between data teams and engineering/product stakeholders.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(245,158,11,0.12)"><i class="fa fa-gears" style="color:var(--accent3)"></i></div>
+          <h4>MLOps & Drift-Aware Systems</h4>
+          <p>I don't just train models — I monitor them in production. Drift detection with Evidently AI, KS-tests, and CI/CD retraining pipelines via GitHub Actions + Airflow keep models reliable long after deployment.</p>
+        </div>
+        <div class="strength-card reveal">
+          <div class="strength-icon" style="background:rgba(56,189,248,0.12)"><i class="fa fa-microchip" style="color:var(--accent)"></i></div>
+          <h4>LLM Fine-Tuning & Serving</h4>
+          <p>From instruction-tuning a 7B LLM with QLoRA on consumer hardware to serving LoRA adapters via vLLM + FastAPI — I bridge research-grade fine-tuning and production-ready inference.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUOTES ===== -->
+  <section id="quotes">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// fuel for the mind</p>
+        <h2 class="section-title">Words That Drive the Work</h2>
+        <span class="title-line"></span>
+      </div>
+      <div class="quote-display reveal">
+        <div class="quote-mark">"</div>
+        <p class="quote-text" id="quoteText">In God we trust. All others must bring data.</p>
+        <p class="quote-author" id="quoteAuthor">— W. Edwards Deming</p>
+        <div class="quote-dots" id="quoteDots"></div>
+        <div class="quote-nav">
+          <button class="quote-btn" id="quotePrev"><i class="fa fa-chevron-left"></i></button>
+          <button class="quote-btn" id="quoteNext"><i class="fa fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">// Let's build together</p>
+        <h2 class="section-title">Open a Conversation</h2>
+        <p class="section-subtitle">Whether it's a role, a collaboration, or just a great Data, AI, ML related chat, my inbox is open.</p>
+        <span class="title-line"></span>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h3>Let's Connect</h3>
+          <p>I'm actively looking for Data Scientist, Data Engineer, AI Engineer and ML Engineer roles. If you're building something interesting with data and AI, let's talk.</p>
+          <div class="contact-links">
+            <a href="mailto:harshithbhattaram@gmail.com" class="contact-link-item">
+              <i class="fa fa-envelope"></i>
+              <div><span class="cli-label">Email</span><span class="cli-val">harshith</span></div>
+            </a>
+            <a href="https://www.linkedin.com/in/harshith68/" target="_blank" class="contact-link-item">
+              <i class="fab fa-linkedin-in"></i>
+              <div><span class="cli-label">LinkedIn</span><span class="cli-val">harshith68</span></div>
+            </a>
+            <a href="https://github.com/maniharshith68" target="_blank" class="contact-link-item">
+              <i class="fab fa-github"></i>
+              <div><span class="cli-label">GitHub</span><span class="cli-val">maniharshith68</span></div>
+            </a>
+            <a href="tel:+17162320462" class="contact-link-item">
+              <i class="fa fa-phone"></i>
+              <div><span class="cli-label">Phone</span><span class="cli-val">+1 (716) 232-0462</span></div>
+            </a>
+          </div>
+        </div>
+        <div class="contact-form reveal">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="Your email" />
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="Conversation Subject" />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Hi Harshith, I came across your profile and..."></textarea>
+          </div>
+          <button class="form-submit" onclick="handleFormSubmit()"><i class="fa fa-paper-plane"></i> &nbsp;Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">HB.</div>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/in/harshith68/" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/maniharshith68" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+        <a href="mailto:harshithbhattaram@gmail.com" class="social-icon"><i class="fa fa-envelope"></i></a>
+      </div>
+      <p>Designed & built by Harshith Bhattaram &nbsp;·&nbsp; <span id="year"></span> &nbsp;·&nbsp; NY, USA</p>
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa fa-chevron-up"></i></button>
+
+  <script>
+    // ===== CURSOR =====
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    (function animRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button,.skill-chip,.project-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(2.5)'; ring.style.opacity='0'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='0.5'; });
+    });
+
+    // ===== PARTICLES =====
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    for (let i=0;i<80;i++) particles.push({ x:Math.random()*2000,y:Math.random()*1200,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5 });
+    function drawParticles() {
+      ctx.clearRect(0,0,W,H);
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      const col = isDark ? '99,179,237' : '2,132,199';
+      particles.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${col},0.6)`; ctx.fill();
+      });
+      particles.forEach((a,i) => particles.slice(i+1).forEach(b => {
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<120) { ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle=`rgba(${col},${0.12*(1-d/120)})`; ctx.lineWidth=.6; ctx.stroke(); }
+      }));
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    // ===== THEME =====
+    const toggle = document.getElementById('themeToggle');
+    let dark = true;
+    toggle.addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      toggle.innerHTML = dark ? '<i class="fa fa-moon"></i>' : '<i class="fa fa-sun"></i>';
+    });
+
+    // ===== HAMBURGER =====
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ===== BACK TO TOP =====
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => { backTop.classList.toggle('visible', window.scrollY > 400); });
+
+    // ===== YEAR =====
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== QUOTES =====
+    const quotes = [
+      { text: "In God we trust. All others must bring data.", author: "W. Edwards Deming" },
+      { text: "The goal is to turn data into information, and information into insight.", author: "Carly Fiorina" },
+      { text: "Torture the data, and it will confess to anything.", author: "Ronald Coase" },
+      { text: "Without big data analytics, companies are blind and deaf, wandering out onto the web like deer on a freeway.", author: "Geoffrey Moore" },
+      { text: "Data is the new oil. It's valuable, but if unrefined it cannot really be used.", author: "Clive Humby" },
+      { text: "The best way to predict the future is to create it.", author: "Alan Kay" },
+      { text: "It is a capital mistake to theorize before one has data.", author: "Arthur Conan Doyle" },
+    ];
+    let qi = 0;
+    const qText = document.getElementById('quoteText');
+    const qAuthor = document.getElementById('quoteAuthor');
+    const qDots = document.getElementById('quoteDots');
+    function renderDots() {
+      qDots.innerHTML = quotes.map((_, i) => `<div class="quote-dot${i===qi?' active':''}" onclick="goQuote(${i})"></div>`).join('');
+    }
+    function goQuote(n) {
+      qi = n;
+      qText.style.opacity = '0'; qAuthor.style.opacity = '0';
+      setTimeout(() => {
+        qText.textContent = quotes[qi].text;
+        qAuthor.textContent = '— ' + quotes[qi].author;
+        qText.style.opacity = '1'; qAuthor.style.opacity = '1';
+        renderDots();
+      }, 250);
+    }
+    qText.style.transition = qAuthor.style.transition = 'opacity 0.25s';
+    document.getElementById('quoteNext').onclick = () => goQuote((qi+1)%quotes.length);
+    document.getElementById('quotePrev').onclick = () => goQuote((qi-1+quotes.length)%quotes.length);
+    renderDots();
+    setInterval(() => goQuote((qi+1)%quotes.length), 6000);
+
+    // ===== FORM SUBMIT =====
+    function handleFormSubmit() {
+      const btn = document.querySelector('.form-submit');
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = 'var(--accent2)';
+      setTimeout(() => { btn.innerHTML = '<i class="fa fa-paper-plane"></i> &nbsp;Send Message'; btn.style.background = ''; }, 3000);
+    }
+
+    // ===== ACTIVE NAV =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let curr = '';
+      sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) curr = s.id; });
+      navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#'+curr ? 'var(--accent)' : ''; });
+    });
+  </script>
 </body>
 </html>

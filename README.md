@@ -1,4 +1,4 @@
-<div align="center"> <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=harshith.portfolio&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=40&desc=Personal%20Portfolio%20Website%20%7C%20Data%20Scientist%20%26%20AI%2FML%20Engineer&descAlignY=62&descSize=16" width="100%"/> <br/> <!-- Live site badge — replace URL --> <a href="https://maniharshith68.github.io/" target="_blank"> <img src="https://img.shields.io/badge/🌐%20Live%20Site-https://maniharshith68.github.io/-38bdf8?style=for-the-badge"/> </a> &nbsp; <img src="https://img.shields.io/badge/Status-Live%20%26%20Active-06d6a0?style=for-the-badge"/> &nbsp; <img src="https://img.shields.io/badge/Built%20With-HTML%20%7C%20CSS%20%7C%20Vanilla%20JS-f59e0b?style=for-the-badge"/> &nbsp; <img src="https://img.shields.io/badge/Theme-Dark%20%2F%20Light-8b5cf6?style=for-the-badge"/>
+<div align="center">  <!-- Live site badge — replace URL --> <a href="https://maniharshith68.github.io/" target="_blank"> <img src="https://img.shields.io/badge/🌐%20Live%20Site-https://maniharshith68.github.io/-38bdf8?style=for-the-badge"/> </a> &nbsp; <img src="https://img.shields.io/badge/Status-Live%20%26%20Active-06d6a0?style=for-the-badge"/> &nbsp; <img src="https://img.shields.io/badge/Built%20With-HTML%20%7C%20CSS%20%7C%20Vanilla%20JS-f59e0b?style=for-the-badge"/> &nbsp; <img src="https://img.shields.io/badge/Theme-Dark%20%2F%20Light-8b5cf6?style=for-the-badge"/>
 <br/><br/>
 <img src="https://img.shields.io/badge/Sections-9-38bdf8?style=flat-square"/> &nbsp; <img src="https://img.shields.io/badge/Projects%20Showcased-8-06d6a0?style=flat-square"/> &nbsp; <img src="https://img.shields.io/badge/Skill%20Groups-7-f59e0b?style=flat-square"/> &nbsp; <img src="https://img.shields.io/badge/No%20Framework-Zero%20Build%20Step-e2e8f0?style=flat-square"/> </div>
 
@@ -15,7 +15,7 @@ A dark-first, fully responsive, single-page portfolio built for a Data Scientist
 portfolio/
 ├── index.html              # Entire site — HTML + CSS + JS in one file
 ├── professional_photo.png  # Your profile photo (768×1344)
-├── harshith_resume.pdf     # Resume (linked in the hero Resume button)
+├── resume.pdf              # Resume (linked in the hero Resume button)
 └── README.md               # This file
 ```
 
@@ -28,9 +28,8 @@ portfolio/
 4	Projects	Proof of Work	8 project cards with tech tags, GitHub & demo links
 5	Skills	The Full Arsenal	7 skill groups, hot-market chips marked ★
 6	Strengths	Things I'm Good At	10 strength cards with icons and real descriptions
-7	Quotes	Words That Drive the Work	7-quote auto-carousel with fade transition, dot nav, prev/next buttons
-8	Contact	Open a Conversation	Link cards + contact form with submit feedback
-9	Footer	—	Logo, social icons, copyright
+7	Contact	Open a Conversation	Link cards + contact form with submit feedback
+8	Footer	—	Logo, social icons, copyright
 ```
 
 🚀 Projects Showcased

@@ -229,12 +229,11 @@
         <div class="hero-left">
           <div class="hero-tag"><span></span> Open to Opportunities</div>
           <h1 class="hero-name"><span class="accent">Harshith</span> Bhattaram</h1>
-          <p class="hero-role">AI/ML Engineer</p>
-          <p class="hero-desc">Building end-to-end ML systems that are powerful, explainable, and production-ready.</p>
+          <p class="hero-role">Machine Learning Engineer</p>
+          <p class="hero-desc">Building end-to-end AI, ML systems that are powerful, explainable, and production-ready.</p>
           <div class="hero-cta">
             <a href="#projects" class="btn btn-primary"><i class="fa fa-rocket"></i> View Projects</a>
             <a href="#contact" class="btn btn-outline"><i class="fa fa-paper-plane"></i> Get in Touch</a>
-            <a href="resume.pdf" class="btn btn-outline" download><i class="fa fa-download"></i> Resume</a>
           </div>
         </div>
         <div class="hero-visual reveal">
@@ -320,18 +319,19 @@
           <div class="exp-card">
             <div class="exp-header">
               <div>
-                <div class="exp-role">Software Engineer I &mdash; Machine Learning Engineer</div>
+                <div class="exp-role">Software Engineer &mdash; ML</div>
                 <div class="exp-company">LocoNav Fleet Management Solutions</div>
               </div>
               <span class="exp-period">Jun 2022 &ndash; Jun 2024</span>
             </div>
             <ul class="exp-bullets">
-              <li>Deployed and optimized YOLOv8 and XGBoost drowsiness detection pipeline, exporting to ONNX and building TensorRT FP16 engines to reduce latency on edge devices.</li>
-              <li>Built and containerized inference service with Docker and DeepStream SDK, implemented an event driven data pipeline using MQTT, Kafka, and FastAPI REST API with TimescaleDB to deliver real time alerts to the fleet dashboard team.</li>
-              <li>Setup MLflow model registry and DVC based dataset versioning for staged model rollouts, orchestrated retraining workflows with Airflow and configuring EvidentlyAI for drift monitoring across production fleets.</li>
-              <li>Integrated a LightGBM ETA model into a real time inference pipeline using Kafka telemetry and OSRM route features, reducing MAE to 10 minutes in production.</li>
-              <li>Built and scaled the model serving layer using FastAPI, Redis, Kubernetes, with CI/CD pipelines via GitHub Actions and Docker, for deployment across 2 internal applications at sub 50ms latency across three regions.</li>
-              <li>Implemented MLOps infrastructure using MLflow, Optuna and Airflow to operationalize the experiments into automated model retraining and hyperparameter tuning pipelines.</li>
+              <li>Trained and deployed a two-stage (YOLOv8 + XGBoost) detection model, optimized with TensorRT FP16 quantization, cutting inference latency 81% to enable real-time alerts on in-vehicle edge hardware.</li>
+              <li>Built a containerized real-time inference service (Docker, FastAPI) and a Kafka event pipeline that delivered driver safety alerts across a fleet with unreliable connectivity, feeding a live dashboard.</li>
+              <li>Set up MLflow and DVC for full model and dataset versioning, rolled out new models with automatic rollback, protecting a safety-critical feature from bad deployments.</li>
+              <li>Automated model retraining with Airflow, triggered by EvidentlyAI drift alerts, catching a real shift in production driving conditions before it could degrade alert accuracy.</li>
+              <li>Cut ETA prediction error by 13 minutes (MAE) by deploying a LightGBM model via FastAPI on Kubernetes across multiple regions, sustaining sub-50ms P95 latency for production application.</li>
+              <li>Reduced ML infrastructure cost by replacing paid routing APIs with self-hosted OSRM and training on CPU-optimized instances, cutting per-prediction compute cost while holding latency and accuracy targets.</li>
+              <li>Engineered real-time GPS feature extraction using Kafka and OSRM, caching results in Redis to achieve sub-millisecond feature lookups at inference time.</li>
             </ul>
             <div class="exp-tags">
               <span class="exp-tag">TensorRT</span><span class="exp-tag">ONNX</span><span class="exp-tag">Docker</span>
@@ -345,15 +345,15 @@
           <div class="exp-card">
             <div class="exp-header">
               <div>
-                <div class="exp-role">Software Engineer Intern &ndash; ML Intern</div>
+                <div class="exp-role">Software Engineer &ndash; Intern</div>
                 <div class="exp-company">LocoNav Fleet Management Solutions</div>
               </div>
               <span class="exp-period">Jan 2022 &ndash; May 2022</span>
             </div>
             <ul class="exp-bullets">
-              <li>Trained a LightGBM failure-prediction model on time-windowed IoT sensor features (rolling means, slopes, fault-code frequency) with Isolation Forest anomaly scores, across 12,000+ fleet vehicles.</li>
-              <li>Designed a time-aware and leakage-safe feature pipeline on Kafka and Spark infrastructure, registered in Feast for consistent training and feature computation.</li>
-              <li>Containerized and shipped the scoring model as a FastAPI service on Kubernetes with canary rollouts via MLflow's model registry, catching firmware-driven feature drift issues during shadow deployment before it reached production.</li>
+              <li>Developed custom backend reports for corporate fleet trips using real-time GPS movement data for visibility into trip statuses.</li>
+              <li>Built trip performance reporting APIs and backend logic to capture and analyze key operational metrics.</li>
+              <li>Implemented business logic for trip status classification, checkpoint tracking, event detection, and performance analysis based on live GPS and trip telemetry data.</li>
             </ul>
             <div class="exp-tags">
               <span class="exp-tag">Time-Series</span><span class="exp-tag">LightGBM</span><span class="exp-tag">Failure Prediction</span>
